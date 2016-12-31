@@ -12,7 +12,7 @@ const myStyles = StyleSheet.create({
     justifyContent:'center',
   },
   navbarText: {
-    flex:1,
+    flex:4,
     color: 'white',
     fontSize:30,
     paddingLeft:20,
