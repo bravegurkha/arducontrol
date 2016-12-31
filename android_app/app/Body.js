@@ -18,7 +18,7 @@ export default class Body extends Component{
       super(props);
 
       this.state = {
-        message: 'Control Your Home with Arduino | Bluetooth Enabled!',
+        message: 'Control Your Home!',
         isEnabled: false,
         devices: [],
         statRadio: false,
@@ -40,8 +40,72 @@ export default class Body extends Component{
 
   componentWillMount(){
     BluetoothSerial.isEnabled().then((value) => this.setState({isEnabled:value}));
+  }
 
-    
+  write1(){
+      if(this.statBulb1 == true){
+          BluetoothSerial.write('10')
+          .then(() => {
+              this.setState({
+                  statBulb1: false,
+              })
+          }).catch((err) => this.setState({
+              message : err
+          }));
+      }else{
+          BluetoothSerial.write('11')
+          .then(() => {
+              this.setState({
+                  statBulb1: true,
+              })
+          }).catch((err) => this.setState({
+              message : err
+          }));
+      }
+  }
+
+  write2(){
+      if(this.statBulb2 == true){
+          BluetoothSerial.write('20')
+          .then(() => {
+              this.setState({
+                  statBulb2: false,
+              })
+          }).catch((err) => this.setState({
+              message : err
+          }));
+      }else{
+          BluetoothSerial.write('21')
+          .then(() => {
+              this.setState({
+                  statBulb2: true,
+              })
+          }).catch((err) => this.setState({
+              message : err
+          }));
+      }
+  }
+
+  write3(){
+      if(this.statRadio == true){
+          BluetoothSerial.write('30')
+          .then(() => {
+              this.setState({
+                  statRadio: false,
+              })
+          }).catch((err) => this.setState({
+              message : err
+          }));
+      }else{
+          BluetoothSerial.write('31')
+          .then(() => {
+              this.setState({
+                  statRadio: true,
+              })
+          }).catch((err) => this.setState({
+              message : err
+          }));
+      }
   }
 
   render(){
@@ -53,20 +117,15 @@ export default class Body extends Component{
         value={this.state.isEnabled}
         onValueChange={(value) => this.toggle(value)}
         />
-
-        <Text style={styles.bodyMessage}>{this.state.message}</Text>
+        <Text >{this.state.message}</Text>
         <ScrollView style={styles.controlRoom}>
-
-          <View style={styles.controls}>
-
-          </View>
 
           <View style={styles.controls}>
 
             <Text style={styles.controlsText}>Bulb 1</Text>
             <Switch style={styles.switchMe}
             value={this.state.statBulb1}
-            onValueChange = {(value) => this.setState({statBulb1: value})}
+            onValueChange = {this.write1}
             />
 
           </View>
@@ -76,7 +135,7 @@ export default class Body extends Component{
             <Text style={styles.controlsText}>Bulb 2</Text>
             <Switch style={styles.switchMe}
             value={this.state.statBulb2}
-            onValueChange = {(value) => this.setState({statBulb2: value})}
+            onValueChange = {this.write1}
             />
 
           </View>
@@ -86,7 +145,7 @@ export default class Body extends Component{
             <Text style={styles.controlsText}>Radio</Text>
             <Switch style={styles.switchMe}
             value={this.state.statRadio}
-            onValueChange = {(value) => this.setState({statRadio: value})}
+            onValueChange = {this.write1}
             />
 
           </View>
